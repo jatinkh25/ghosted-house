@@ -44,6 +44,12 @@ const grassAmbientOcclutionTexture = textureLoader.load('/textures/grass/ambient
 const grassNormalTexture = textureLoader.load('/textures/grass/normal.jpg')
 const grassRoughnessTexture = textureLoader.load('/textures/grass/roughness.jpg')
 
+const gravesColorTexture = textureLoader.load('/textures/graves/diff.png')
+const gravesAmbientOcclutionTexture = textureLoader.load('/textures/graves/ao.png')
+const gravesNormalTexture = textureLoader.load('/textures/graves/normal.png')
+const gravesMetalnessTexture = textureLoader.load('/textures/graves/arm.png')
+const gravesRoughnessTexture = textureLoader.load('textures/graves/roughness.png')
+
 grassColorTexture.repeat.set(25, 25)
 grassAmbientOcclutionTexture.repeat.set(25, 25)
 grassNormalTexture.repeat.set(25, 25)
@@ -58,6 +64,24 @@ grassColorTexture.wrapT = RepeatWrapping
 grassAmbientOcclutionTexture.wrapT = RepeatWrapping
 grassNormalTexture.wrapT = RepeatWrapping
 grassRoughnessTexture.wrapT = RepeatWrapping
+
+gravesColorTexture.repeat.set(2, 2)
+gravesAmbientOcclutionTexture.repeat.set(2, 2)
+gravesNormalTexture.repeat.set(2, 2)
+gravesRoughnessTexture.repeat.set(2, 2)
+gravesMetalnessTexture.repeat.set(2, 2)
+
+gravesColorTexture.wrapT = RepeatWrapping
+gravesAmbientOcclutionTexture.wrapT = RepeatWrapping
+gravesNormalTexture.wrapT = RepeatWrapping
+gravesRoughnessTexture.wrapT = RepeatWrapping
+gravesMetalnessTexture.wrapT = RepeatWrapping
+
+gravesColorTexture.wrapS = RepeatWrapping
+gravesAmbientOcclutionTexture.wrapS = RepeatWrapping
+gravesNormalTexture.wrapS = RepeatWrapping
+gravesRoughnessTexture.wrapS = RepeatWrapping
+gravesMetalnessTexture.wrapS = RepeatWrapping
 
 const scene = new Scene()
 
@@ -153,7 +177,17 @@ const graves = new Group()
 scene.add(graves)
 
 const graveGeometry = new BoxGeometry(0.7, 1.2, 0.3)
-const graveMaterial = new MeshStandardMaterial({ color: '#b2b6b1' })
+const graveMaterial = new MeshStandardMaterial({
+  map: gravesColorTexture,
+  normalMap: gravesNormalTexture,
+  aoMap: gravesAmbientOcclutionTexture,
+  roughnessMap: gravesRoughnessTexture,
+  // displacementMap: gravesDisplacementTexture,
+  // displacementScale: 0.1,
+  // wireframe: true,
+  metalnessMap: gravesMetalnessTexture,
+})
+graveGeometry.setAttribute('uv2', new Float32BufferAttribute(graveGeometry.attributes.uv.array, 3))
 
 // Graves
 for (let i = 0; i < 50; ++i) {
